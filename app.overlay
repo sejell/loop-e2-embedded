@@ -1,0 +1,6 @@
+/ {
+	buzzer {
+		compatible = "gpio-buzzer";
+		gpios = <&gpio0 25 GPIO_ACTIVE_HIGH>;
+	};
+};

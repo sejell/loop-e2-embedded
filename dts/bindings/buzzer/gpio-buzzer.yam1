@@ -1,0 +1,11 @@
+description: GPIO controlled buzzer
+
+compatible: "gpio-buzzer"
+
+include: base.yaml
+
+properties:
+  gpios:
+    type: phandle-array
+    required: true
+    description: GPIO connected to the buzzer
