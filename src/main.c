@@ -14,15 +14,16 @@ int main(void)
 
     printf("Buzzer initialized successfully.\n");
 
-    while (1) {
-        printf("Buzzer ON for 2 seconds\n");
+    for (int i = 0; i < 3; i++) {
+        printf("Playing buzzer for 2 seconds\n");
 
         buzzer_play(2000);
 
-        printf("Buzzer OFF for 2 seconds\n");
-
-        k_msleep(2000);
+        printf("Buzzer stopped\n");
+        k_msleep(1000);
     }
+
+    printf("Buzzer test complete!\n");
 
     return 0;
 }
