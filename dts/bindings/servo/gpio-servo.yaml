@@ -1,0 +1,11 @@
+description: PWM controlled servo motor
+
+compatible: "gpio-servo"
+
+include: base.yaml
+
+properties:
+  pwms:
+    type: phandle-array
+    required: true
+    description: PWM signal connected to the servo

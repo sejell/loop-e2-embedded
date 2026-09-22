@@ -1,35 +1,33 @@
 #include <stdio.h>
 #include <zephyr/kernel.h>
 
-#include "rgb.h"
+#include "servo.h"
 
 int main(void)
 {
-    printf("HEX RGB test starting!\n");
+    printf("Servo test starting!\n");
 
-    if (rgb_init() != 0) {
-        printf("RGB initialization failed!\n");
+    if (servo_init() != 0) {
+        printf("Servo initialization failed!\n");
         return 0;
     }
 
-    // Mostly RED
-    printf("Testing 0xF51020 - should be RED\n");
-    rgb_set_hex(0xF51020);
+    printf("Moving to 0 degrees\n");
+    servo_set_angle(0);
     k_msleep(2000);
 
-    // Mostly GREEN
-    printf("Testing 0x20E840 - should be GREEN\n");
-    rgb_set_hex(0x20E840);
+    printf("Moving to 90 degrees\n");
+    servo_set_angle(90);
     k_msleep(2000);
 
-    // Mostly BLUE
-    printf("Testing 0x2020E8 - should be BLUE\n");
-    rgb_set_hex(0x2020E8);
+    printf("Moving to 180 degrees\n");
+    servo_set_angle(180);
     k_msleep(2000);
 
-    rgb_off();
+    printf("Moving back to 90 degrees\n");
+    servo_set_angle(90);
 
-    printf("HEX RGB test complete!\n");
+    printf("Servo test complete!\n");
 
     return 0;
 }

@@ -7,9 +7,11 @@ target_sources(app PRIVATE
         src/main.c
         drivers/buzzers/buzzer.c
         drivers/rgb/rgb.c
+        drivers/servo/servo.c
 )
 
 target_include_directories(app PRIVATE
         drivers/buzzers
         drivers/rgb
+        drivers/servo
 )
