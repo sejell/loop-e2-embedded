@@ -1,0 +1,11 @@
+description: PWM controlled LED
+
+compatible: "pwm-led"
+
+include: base.yaml
+
+properties:
+  pwms:
+    type: phandle-array
+    required: true
+    description: PWM controller connected to the LED

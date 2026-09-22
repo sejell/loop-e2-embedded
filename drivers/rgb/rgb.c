@@ -13,71 +13,57 @@ static const struct gpio_dt_spec green_led =
 static const struct gpio_dt_spec blue_led =
     GPIO_DT_SPEC_GET(RGB_NODE, blue_gpios);
 
+int rgb_init(void) {
+  if (!gpio_is_ready_dt(&red_led) || !gpio_is_ready_dt(&green_led) ||
+      !gpio_is_ready_dt(&blue_led)) {
+    return -1;
+  }
 
-int rgb_init(void)
-{
-    if (!gpio_is_ready_dt(&red_led) ||
-        !gpio_is_ready_dt(&green_led) ||
-        !gpio_is_ready_dt(&blue_led)) {
-        return -1;
-        }
+  if (gpio_pin_configure_dt(&red_led, GPIO_OUTPUT_INACTIVE) != 0) {
+    return -1;
+  }
 
-    if (gpio_pin_configure_dt(&red_led, GPIO_OUTPUT_INACTIVE) != 0) {
-        return -1;
-    }
+  if (gpio_pin_configure_dt(&green_led, GPIO_OUTPUT_INACTIVE) != 0) {
+    return -1;
+  }
 
-    if (gpio_pin_configure_dt(&green_led, GPIO_OUTPUT_INACTIVE) != 0) {
-        return -1;
-    }
+  if (gpio_pin_configure_dt(&blue_led, GPIO_OUTPUT_INACTIVE) != 0) {
+    return -1;
+  }
 
-    if (gpio_pin_configure_dt(&blue_led, GPIO_OUTPUT_INACTIVE) != 0) {
-        return -1;
-    }
-
-    return 0;
+  return 0;
 }
 
-
-void rgb_off(void)
-{
-    gpio_pin_set_dt(&red_led, 0);
-    gpio_pin_set_dt(&green_led, 0);
-    gpio_pin_set_dt(&blue_led, 0);
+void rgb_off(void) {
+  gpio_pin_set_dt(&red_led, 0);
+  gpio_pin_set_dt(&green_led, 0);
+  gpio_pin_set_dt(&blue_led, 0);
 }
 
-
-void rgb_red(void)
-{
-    rgb_off();
-    gpio_pin_set_dt(&red_led, 1);
+void rgb_red(void) {
+  rgb_off();
+  gpio_pin_set_dt(&red_led, 1);
 }
 
-
-void rgb_green(void)
-{
-    rgb_off();
-    gpio_pin_set_dt(&green_led, 1);
+void rgb_green(void) {
+  rgb_off();
+  gpio_pin_set_dt(&green_led, 1);
 }
 
-
-void rgb_blue(void)
-{
-    rgb_off();
-    gpio_pin_set_dt(&blue_led, 1);
+void rgb_blue(void) {
+  rgb_off();
+  gpio_pin_set_dt(&blue_led, 1);
 }
-void rgb_set_hex(uint32_t hex_value)
-{
-    int red = (hex_value >> 16) & 0xFF;
-    int green = (hex_value >> 8) & 0xFF;
-    int blue = hex_value & 0xFF;
+void rgb_set_hex(uint32_t hex_value) {
+  int red = (hex_value >> 16) & 0xFF;
+  int green = (hex_value >> 8) & 0xFF;
+  int blue = hex_value & 0xFF;
 
-    if (red >= green && red >= blue) {
-        rgb_red();
-    }
-    else if (green >= red && green >= blue) {
-        rgb_green();
-    }
-    else {
-        rgb_blue();
-    }
+  if (red >= green && red >= blue) {
+    rgb_red();
+  } else if (green >= red && green >= blue) {
+    rgb_green();
+  } else {
+    rgb_blue();
+  }
 }

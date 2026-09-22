@@ -11,4 +11,10 @@
 		green-gpios = <&gpio0 17 GPIO_ACTIVE_HIGH>;
 		blue-gpios = <&gpio0 16 GPIO_ACTIVE_HIGH>;
 	};
+
+  pwm_led {
+    compatible = "pwm-led";
+
+    pwms = <&pwm0 19 PWM_MSEC(10) PWM_POLARITY_NORMAL>;
+  };
 };
