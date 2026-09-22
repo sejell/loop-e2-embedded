@@ -3,4 +3,12 @@
 		compatible = "gpio-buzzer";
 		gpios = <&gpio0 25 GPIO_ACTIVE_HIGH>;
 	};
+
+	rgb_leds {
+		compatible = "gpio-rgb";
+
+		red-gpios = <&gpio0 18 GPIO_ACTIVE_HIGH>;
+		green-gpios = <&gpio0 17 GPIO_ACTIVE_HIGH>;
+		blue-gpios = <&gpio0 16 GPIO_ACTIVE_HIGH>;
+	};
 };

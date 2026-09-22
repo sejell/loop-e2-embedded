@@ -1,29 +1,35 @@
 #include <stdio.h>
 #include <zephyr/kernel.h>
 
-#include "buzzer.h"
+#include "rgb.h"
 
 int main(void)
 {
-    printf("E2 Buzzer Project Started!\n");
+    printf("HEX RGB test starting!\n");
 
-    if (buzzer_init() != 0) {
-        printf("Buzzer initialization failed!\n");
+    if (rgb_init() != 0) {
+        printf("RGB initialization failed!\n");
         return 0;
     }
 
-    printf("Buzzer initialized successfully.\n");
+    // Mostly RED
+    printf("Testing 0xF51020 - should be RED\n");
+    rgb_set_hex(0xF51020);
+    k_msleep(2000);
 
-    for (int i = 0; i < 3; i++) {
-        printf("Playing buzzer for 2 seconds\n");
+    // Mostly GREEN
+    printf("Testing 0x20E840 - should be GREEN\n");
+    rgb_set_hex(0x20E840);
+    k_msleep(2000);
 
-        buzzer_play(2000);
+    // Mostly BLUE
+    printf("Testing 0x2020E8 - should be BLUE\n");
+    rgb_set_hex(0x2020E8);
+    k_msleep(2000);
 
-        printf("Buzzer stopped\n");
-        k_msleep(1000);
-    }
+    rgb_off();
 
-    printf("Buzzer test complete!\n");
+    printf("HEX RGB test complete!\n");
 
     return 0;
 }
