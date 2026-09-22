@@ -1,6 +1,6 @@
 description: PWM controlled LED
 
-compatible: "pwm-led"
+compatible: "gpio-pwm"
 
 include: base.yaml
 

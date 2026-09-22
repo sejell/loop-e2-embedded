@@ -2,52 +2,73 @@
 #include <zephyr/dt-bindings/pinctrl/esp32-pinctrl.h>
 
 / {
-	buzzer {
-		compatible = "gpio-buzzer";
-		gpios = <&gpio0 25 GPIO_ACTIVE_HIGH>;
-	};
-
-	rgb_leds {
-		compatible = "gpio-rgb";
-
-		red-gpios = <&gpio0 18 GPIO_ACTIVE_HIGH>;
-		green-gpios = <&gpio0 17 GPIO_ACTIVE_HIGH>;
-		blue-gpios = <&gpio0 16 GPIO_ACTIVE_HIGH>;
-	};
-
-  pwm_led {
-    compatible = "pwm-led";
-
-    pwms = <&pwm0 19 PWM_MSEC(10) PWM_POLARITY_NORMAL>;
+  chosen {
+    zephyr,console = &uart0;
   };
 
-	servo {
-		compatible = "gpio-servo";
-		pwms = <&ledc0 0 PWM_MSEC(20) PWM_POLARITY_NORMAL>;
-	};
+  buzzer {
+    compatible = "gpio-buzzer";
+    gpios = <&gpio0 25 GPIO_ACTIVE_HIGH>;
+  };
+
+  rgb_leds {
+    compatible = "gpio-rgb";
+
+    red-gpios = <&gpio0 18 GPIO_ACTIVE_HIGH>;
+    green-gpios = <&gpio0 17 GPIO_ACTIVE_HIGH>;
+    blue-gpios = <&gpio0 16 GPIO_ACTIVE_HIGH>;
+  };
+
+  servo {
+    compatible = "gpio-servo";
+    pwms = <&ledc0 0 PWM_MSEC(20) PWM_POLARITY_NORMAL>;
+  };
+
+  pwm_led: pwm_led {
+    compatible = "gpio-pwm";
+    pwms = <&ledc0 1 PWM_MSEC(20) PWM_POLARITY_NORMAL>;
+  };
 };
 
 
 &pinctrl {
-	ledc0_servo: ledc0_servo {
-		group1 {
-			pinmux = <LEDC_CH0_GPIO27>;
-			output-enable;
-		};
-	};
+  ledc0_default: ledc0_default {
+    servo_group {
+      pinmux = <LEDC_CH0_GPIO27>;
+      output-enable;
+    };
+
+    led_group {
+      pinmux = <LEDC_CH1_GPIO19>;
+      output-enable;
+    };
+  };
 };
 
+&uart0 {
+  status = "okay";
+  current-speed = <115200>;
+};
+
+&gpio0 {
+  status = "okay";
+};
 
 &ledc0 {
-	pinctrl-0 = <&ledc0_servo>;
-	pinctrl-names = "default";
-	status = "okay";
+  pinctrl-0 = <&ledc0_default>;
+  pinctrl-names = "default";
+  status = "okay";
 
-	#address-cells = <1>;
-	#size-cells = <0>;
+  #address-cells = <1>;
+  #size-cells = <0>;
 
-	channel0@0 {
-		reg = <0>;
-		timer = <0>;
-	};
+  channel0@0 {
+    reg = <0>;
+    timer = <0>;
+  };
+
+  channel1@1 {
+    reg = <1>;
+    timer = <1>;
+  };
 };
