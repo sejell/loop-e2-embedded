@@ -65,3 +65,19 @@ void rgb_blue(void)
     rgb_off();
     gpio_pin_set_dt(&blue_led, 1);
 }
+void rgb_set_hex(uint32_t hex_value)
+{
+    int red = (hex_value >> 16) & 0xFF;
+    int green = (hex_value >> 8) & 0xFF;
+    int blue = hex_value & 0xFF;
+
+    if (red >= green && red >= blue) {
+        rgb_red();
+    }
+    else if (green >= red && green >= blue) {
+        rgb_green();
+    }
+    else {
+        rgb_blue();
+    }
+}
